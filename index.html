@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>absq.xyz</title>
+<script src="https://cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb-min.js"></script>
+<script src="pasteLoader.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,100&display=swap');
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+body{
+    margin: 0;
+    text-align: center;
+
+}
+
+.body{
+    text-align: center;
+
+    margin: auto;
+    width: 70%;
+    min-height: 100vh;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
+}
+*{
+    font-family: monospace;
+    margin: 0;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  text-overflow: ellipsis; overflow: hidden;
+}
+
+tr:nth-child(even) {background-color: white;}
+
+.table{
+    background-color: #d9d9d9;
+    color: black;
+    width:100%;
+    table-layout: fixed;
+    font-size: 14px;
+    text-align: center;
+    margin: auto;
+    border: solid 1px gray;
+}
+
+th{
+   padding-top: 13px;
+   padding-bottom: 13px;
+}
+
+.link{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.link:hover{
+    text-decoration: underline;
+}
+
+button{
+    border: 1px solid gray;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 15px;
+    transition: all .3s ease;
+}
+button:hover{
+    font-size: 17px;
+    background-color: #d1d1d1;
+}
+</style>
+</head>
+<body>
+<div class="body">
+<div style="width: 70%; text-align: center; margin: auto; padding-top: 50px; padding-bottom: 50px;">
+    <p style="white-space: pre-wrap; font-size: 0.6vw;">
+▄▄▄       ▄▄▄▄     ██████   █████       ▒██   ██▒▓██   ██▓▒███████▒
+▒████▄    ▓█████▄ ▒██    ▒ ▒██▓  ██▒     ▒▒ █ █ ▒░ ▒██  ██▒▒ ▒ ▒ ▄▀░
+▒██  ▀█▄  ▒██▒ ▄██░ ▓██▄   ▒██▒  ██░     ░░  █   ░  ▒██ ██░░ ▒ ▄▀▒░ 
+░██▄▄▄▄██ ▒██░█▀    ▒   ██▒░██  █▀ ░      ░ █ █ ▒   ░ ▐██▓░  ▄▀▒   ░
+▓█   ▓██▒░▓█  ▀█▓▒██████▒▒░▒███▒█▄  ██▓ ▒██▒ ▒██▒  ░ ██▒▓░▒███████▒
+▒▒   ▓▒█░░▒▓███▀▒▒ ▒▓▒ ▒ ░░░ ▒▒░ ▒  ▒▓▒ ▒▒ ░ ░▓ ░   ██▒▒▒ ░▒▒ ▓░▒░▒
+▒   ▒▒ ░▒░▒   ░ ░ ░▒  ░ ░ ░ ▒░  ░  ░▒  ░░   ░▒ ░ ▓██ ░▒░ ░░▒ ▒ ░ ▒
+░   ▒    ░    ░ ░  ░  ░     ░   ░  ░    ░    ░   ▒ ▒ ░░  ░ ░ ░ ░ ░
+░  ░ ░            ░      ░      ░   ░    ░   ░ ░       ░ ░    
+░                     ░            ░ ░     ░        
+    </p><br>
+    <button onclick="redir()">Upload Paste</button><br><br>
+    <label style="float: left; margin-bottom: 10px;">Pinned Pastes</label>
+    <table id="pinnedTable" class="table">
+
+    
+    </table><br><br>
+
+
+    <label style="float: left; margin-bottom: 10px;">All Pastes</label>
+<table id="allTable" class="table">
+  
+
+
+
+
+</table>
+</div>
+</div>
+</body>
+</html>
