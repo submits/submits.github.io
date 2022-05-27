@@ -1,116 +1,132 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>absq.xyz</title>
-<script src="https://cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb-min.js"></script>
-<script src="pasteLoader.js"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,100&display=swap');
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>absq.xyz</title>
+        <script src="index.js"></script>
+    </head>
+    <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-body{
-    margin: 0;
-    text-align: center;
-
-}
-
-.body{
-    text-align: center;
-
-    margin: auto;
-    width: 70%;
-    min-height: 100vh;
-    border-left: solid 1px gray;
-    border-right: solid 1px gray;
-}
 *{
-    font-family: monospace;
-    margin: 0;
+  font-family: 'Poppins';
+  transition: all .3s ease;
+}
+        .modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
 }
 
-th, td {
-  text-align: left;
-  padding: 8px;
-  text-overflow: ellipsis; overflow: hidden;
-}
 
-tr:nth-child(even) {background-color: white;}
-
-.table{
-    background-color: #d9d9d9;
-    color: black;
-    width:100%;
-    table-layout: fixed;
-    font-size: 14px;
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     text-align: center;
-    margin: auto;
-    border: solid 1px gray;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border-radius: 5px;
 }
 
-th{
-   padding-top: 13px;
-   padding-bottom: 13px;
+.main{
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  
 }
 
-.link{
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
+
+.desc{
+  font-size: 1.6vh;
+  padding-bottom: 2vh;
 }
-.link:hover{
-    text-decoration: underline;
+
+
+h1{
+  font-size: 6vh;
+  margin-bottom: 0;
+
 }
+
+.mediaButton{
+ font-size: 2.5vh;
+ transition: all .1s ease;
+ color: black;
+ padding-left: 0.5vh;
+ padding-right: 0.5vh;
+
+}
+.mediaButton:hover{
+  font-size: 3vh;
+}
+
 
 button{
-    border: 1px solid gray;
-    cursor: pointer;
-    padding: 5px;
-    font-size: 15px;
-    transition: all .3s ease;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #cccccc;
 }
 button:hover{
-    font-size: 17px;
-    background-color: #d1d1d1;
+  font-size: 14px;
 }
-</style>
-</head>
-<body>
-<div class="body">
-<div style="width: 70%; text-align: center; margin: auto; padding-top: 50px; padding-bottom: 50px;">
-    <p style="white-space: pre-wrap; font-size: 0.6vw;">
-▄▄▄       ▄▄▄▄     ██████   █████       ▒██   ██▒▓██   ██▓▒███████▒
-▒████▄    ▓█████▄ ▒██    ▒ ▒██▓  ██▒     ▒▒ █ █ ▒░ ▒██  ██▒▒ ▒ ▒ ▄▀░
-▒██  ▀█▄  ▒██▒ ▄██░ ▓██▄   ▒██▒  ██░     ░░  █   ░  ▒██ ██░░ ▒ ▄▀▒░ 
-░██▄▄▄▄██ ▒██░█▀    ▒   ██▒░██  █▀ ░      ░ █ █ ▒   ░ ▐██▓░  ▄▀▒   ░
-▓█   ▓██▒░▓█  ▀█▓▒██████▒▒░▒███▒█▄  ██▓ ▒██▒ ▒██▒  ░ ██▒▓░▒███████▒
-▒▒   ▓▒█░░▒▓███▀▒▒ ▒▓▒ ▒ ░░░ ▒▒░ ▒  ▒▓▒ ▒▒ ░ ░▓ ░   ██▒▒▒ ░▒▒ ▓░▒░▒
-▒   ▒▒ ░▒░▒   ░ ░ ░▒  ░ ░ ░ ▒░  ░  ░▒  ░░   ░▒ ░ ▓██ ░▒░ ░░▒ ▒ ░ ▒
-░   ▒    ░    ░ ░  ░  ░     ░   ░  ░    ░    ░   ▒ ▒ ░░  ░ ░ ░ ░ ░
-░  ░ ░            ░      ░      ░   ░    ░   ░ ░       ░ ░    
-░                     ░            ░ ░     ░        
-    </p><br>
-    <button onclick="redir()">Upload Paste</button><br><br>
-    <label style="float: left; margin-bottom: 10px;">Pinned Pastes</label>
-    <table id="pinnedTable" class="table">
-
-    
-    </table><br><br>
 
 
-    <label style="float: left; margin-bottom: 10px;">All Pastes</label>
-<table id="allTable" class="table">
-  
+@keyframes rainbow { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 25%}
+    100%{background-position:0% 50%}
+}
 
 
 
+.rgbTextClass{
+  background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 8s ease infinite;
+  text-align: center;
+  background-size: 800% 800%;
+    -webkit-background-clip: text;
+}
 
-</table>
-</div>
-</div>
-</body>
+    </style>
+    <body>
+        <div id="audioAlert" class="modal">
+            <div class="modal-content">
+              <p style="font-size: 15px;">Browser requires interaction to play audio.</p>
+              <button id="interactionButton">Click Here to Continue</button>
+            </div>
+          
+          </div>
+        <audio style="display:none" id="audio" controls loop>
+            <source id="audioSource">
+        </audio>
+        <div class="main">
+        <h1 id="name">absq</h1>
+        <p class="desc" id="description">NFT Morbillionaire and Weiland Enthusiast.</p>
+        <a id="tiktok" target="_blank" class="mediaButton" href="https://tiktok.com/@vod."><i class="fa-brands fa-tiktok"></i></a>
+        <a id="twitch" target="_blank" class="mediaButton" href="https://twitch.tv/svgs"><i class="fa-brands fa-twitch"></i></a>
+        <a id="github" target="_blank" class="mediaButton" href="https://github.com/F8I"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </body>
 </html>
