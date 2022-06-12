@@ -1,4 +1,4 @@
 # submits.github.io
 
-![Alt text](https://imageserver.absq.repl.co/)
+![Alt texts](https://imageserver.absq.repl.co/)
 
