@@ -1,31 +1,69 @@
-let ids = ["https://z.zz.fo/UQvMT.mp3",
-"https://z.zz.fo/cL8oq.mp3",
-"https://z.zz.fo/FhgVO.mp3",
- ]
+window.onload = function(){
+    var file = document.getElementById("actual-btn");
+    let text = ""
+file.addEventListener('change', function () {
 
- function sleep(milisec) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve('')
-        }, milisec);
-    })
+let reader = new FileReader();
+reader.onload = function(e) {
+text = reader.result
+if(file.files[0].name.split('.').pop() != "html")
+{
+    alert("Please select a .html file.")
+}
+else{
+document.getElementById("fileInfo").style.display = "block"
+document.getElementById("result").style.display = "none"
+document.getElementById("selected").innerText = file.files[0].name
+document.getElementById("hostButton").disabled = false
+document.getElementById("hostButton").style.cursor = "pointer"
+document.getElementById("hostButton").style.color = "white"
+    document.getElementById("hostButton").innerText = "Host"
+    document.getElementById("meta-title").value = ""
+    document.getElementById("meta-title").value = ""
+    
+    let parser = new DOMParser();
+const doc = parser.parseFromString(text, 'text/html');
+try{
+    document.getElementById("meta-title").value = doc.querySelector('meta[property="og:title"]').content;
+}
+catch{
+    console.log("No title detected.")
 }
 
+try{
+    document.getElementById("meta-title").value = doc.querySelector('meta[property="og:description"]').content;
+}
+catch{
+    console.log("No description detected.")
+}
+}
 
-window.onload = async function(){
-    document.getElementById("audio").src = ids[Math.floor(Math.random()*ids.length)]
-    document.getElementById("audioAlert").style.display = "block"
-    document.getElementById("interactionButton").onclick = function(){
-        document.getElementById("audioAlert").style.display = "none"
-        document.getElementById("audio").play()
-        document.getElementById("audio").volume = 0.05
-        document.getElementById("name").classList.add("animationClass")
-        document.getElementById("name").classList.add("animationClass")
-        document.getElementById("description").classList.add("rgbTextClass")
-        document.getElementById("name").classList.add("rgbTextClass")
-        document.getElementById("tiktok").classList.add("rgbTextClass")
-        document.getElementById("twitch").classList.add("rgbTextClass")
-        document.getElementById("github").classList.add("rgbTextClass")
+}
+reader.readAsText(file.files[0]);
+
+});
+
+document.getElementById("hostButton").onclick = async function(){
+
+    if(document.getElementById("meta-title").value != "")
+    {
+        text +=  `<meta property="og:title" content="` + document.getElementById("meta-title").value + `"></meta>`
     }
+
+    if(document.getElementById("meta-title").value != "")
+    {
+        text +=  `<meta property="og:description" content="` + document.getElementById("meta-description").value + `"></meta>`
+    }
+
+    var response = await fetch("https://vs.vercel.app/upload?file=" + escape(text))
+    const data = await response.json()
+    document.getElementById("result").style.display = "block"
+    document.getElementById("href").href = "https://vs.now.sh/" + data.file
+    document.getElementById("href").innerText = "vs.now.sh/" + data.file
+    document.getElementById("hostButton").disabled = true
+    document.getElementById("hostButton").style.cursor = "not-allowed"
+document.getElementById("hostButton").style.color = "gray"
+    document.getElementById("hostButton").innerText = "Already Hosted"
 }
 
+}
