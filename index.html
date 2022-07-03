@@ -1,1 +1,141 @@
-AQOqv7JasHDAr
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>absq.xyz</title>
+        <script src="index.js"></script>
+        <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Gantari:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+            *{
+                font-family: 'Gantari', sans-serif;
+                
+            }
+            body{
+                background-color: #000000;
+                background-image: repeating-linear-gradient(45deg, black, rgb(2, 2, 126));
+  background-size: 700% 700%;
+                color: white;
+            }
+
+            .main{
+                position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+            }
+
+            .input{
+               
+                background-image: repeating-linear-gradient(45deg, #682fc5, blue);
+  background-size: 200% 200%;
+  cursor: pointer;
+padding: 10px;
+border-radius: 5px;
+transition: font-size .3s ease;
+
+            }
+            .input:hover{
+            font-size: 17px;
+
+            }
+
+            button{
+               
+               background-image: repeating-linear-gradient(45deg, #682fc5, blue);
+ background-size: 200% 200%;
+ cursor: pointer;
+padding: 10px;
+border-radius: 5px;
+font-size: 16px;
+transition: font-size .3s ease;
+border: none;
+color: white;
+padding-left: 15px;
+padding-right: 15px;
+
+           }
+           button:hover{
+           font-size: 17px;
+
+           }
+
+            .subtext{
+                font-size: 18px;
+            }
+
+            h1{
+                font-size: 35px;
+            }
+            
+            .best{
+                background-image: repeating-linear-gradient(45deg, #682fc5, blue);
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+    -webkit-background-clip: text;
+    font-weight: bold
+            }
+
+            
+
+            
+            .fileInfo{
+  background-size: 800% 800%;
+                padding: 15px;
+                border-radius: 5px;
+  border-style: solid;
+  border-width: 2px;
+    border-radius: 7px;
+    background-color: none;
+                        }
+
+                        a{
+                            font-weight: bold;
+                            color: #0084b8;
+                            font-size: 17px;
+                            text-decoration: none;
+     
+                        }
+                        a:hover{
+                            text-decoration: underline;
+                        }
+
+
+                        input{
+                            width: 100%;
+                            box-sizing: border-box;
+                            background-color: rgba(0,0,0,0);
+                            border: 2px solid white;
+                            border-radius: 3px;
+                            color: white;
+                            padding-top: 3px;
+                            padding-bottom: 3px;
+                            font-size: 15px;
+                            margin-bottom: 5px;
+                        }
+
+        </style>
+    </head>
+    <body>
+        <div class="main">
+        <h1>absq.xyz</h1>
+        <p class="subtext">The <label class="best">best</label> page creating solution.</p><br>
+        <input type="file" id="actual-btn" hidden/>
+        <label class="input" for="actual-btn">Choose File</label><br><br><br>
+        <div style="display: none;" id="fileInfo" class="fileInfo">
+            <p id="ptag" >Selected File: <label style="font-size: 17px" id="selected" class="best"><div id="result" style="display: none;"><a target="_blank" id="href" href="a">a</a></div></label></p>
+            <hr style="width: 80%; margin: auto"><br>
+            <label style="margin-bottom: 10px; display:inline-block; font-weight: bold;">Metadata Editor</label><br>
+            <input id="meta-title" type="text"><br>
+            <input id="meta-description" type="text">
+           <br><br>
+            <button id="hostButton">Host</button>
+        </div> 
+        
+       
+        </div>
+    </body>
+</html>
