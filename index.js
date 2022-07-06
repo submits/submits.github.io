@@ -18,7 +18,7 @@ window.onload = async function(){
     document.getElementById("interactionButton").onclick = function(){
         document.getElementById("audioAlert").style.display = "none"
         document.getElementById("audio").play()
-        document.getElementById("audio").volume = 0.05
+        document.getElementById("audio").volume = 0.1
         document.getElementById("name").classList.add("animationClass")
         document.getElementById("name").classList.add("animationClass")
         document.getElementById("description").classList.add("rgbTextClass")
