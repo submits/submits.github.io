@@ -1,6 +1,6 @@
-let ids = ["https://z.zz.fo/UQvMT.mp3",
-"https://z.zz.fo/cL8oq.mp3",
-"https://z.zz.fo/FhgVO.mp3",
+let ids = ["https://z.zz.fo/FhgVO.mp3",
+"https://z.zz.fo/EvDBL.mp3",
+"https://z.zz.fo/XDqtT.mp3",
  ]
 
  function sleep(milisec) {
