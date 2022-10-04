@@ -1,0 +1,44 @@
+<script src="index.js"></script>
+<title>Student DB Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+*{
+    font-family: 'Segoe UI', sans-serif;
+}
+    .a{
+        padding:15px; border-radius:5px; 
+        margin-bottom: 15px;
+    }
+    .a:nth-child(odd) {
+    background-color:#e3e3e3;
+    }
+    .a:nth-child(even) {
+    background-color: #a4a4a4;
+    }
+
+    body{
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    #results{
+        padding: 20px;
+    }
+
+    button{
+       margin-top: 3px;
+    }
+ 
+</style>
+<div style="text-align: center;">
+    <h1>Student DB Search</h1>
+    <p>Search through a database of every student in the school <i>(Some students may have duplicates due to multiple emails).</i></p>
+    <input id="name" type="text"><br><br>
+    <button id="searchName">Search by Name</button> <button id="searchForm">Search by Form</button> <button id="searchHouse">Search by House</button> <button id="searchDob">Search by DOB</button> <button id="searchEmail">Search by Email</button> <button id="searchExam">Search by Exam Number</button> <button id="searchUpn">Search by UPN</button> <button id="searchEntry">Search by Entry Year</button><br><br>
+    <label>Results Found: <label style="font-weight: bold;" id="resultsFound">0</label></label>
+</div>
+
+<p id="results">
+   
+</p>
