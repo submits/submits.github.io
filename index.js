@@ -62,30 +62,45 @@ let studentDB;
   function showData(data)
   {
     document.getElementById("resultsFound").innerHTML = data.length
+    document.getElementById("resultsFounds").style.display = "block"
     document.getElementById("results").innerHTML = ""
     for (let i = 0; i < data.length; i++) {
+
+
+      let date = new Date(data[i].DOB)
+
+let examNumber = data[i].ExamNumber
+if(examNumber == undefined){
+  examNumber = "No exam number."
+}
+
+let upn = data[i].UPN
+if(upn == undefined){
+  upn = "No UPN."
+}
+
 
         document.getElementById("results").innerHTML += `<div class="a">
         <p>
         AD: <b>` + data[i].AD + `</b><br>
-        DOB: <b>` + data[i].DOB + `</b><br>
-        DisplayName: <b>` + data[i].DisplayName + `</b><br>
-        DisplayNameLegal: <b>` + data[i].DisplayNameLegal + `</b><br>
-        Email: <b>` + data[i].Email + `</b><br>
-        EmailAddress: <b>` + data[i].EmailAddress + `</b><br>
-        ExamNumber: <b>` + data[i].ExamNumber + `</b><br>
-        FirstName: <b>` + data[i].FirstName + `</b><br>
-        FirstNameLegal: <b>` + data[i].FirstNameLegal + `</b><br>
+        Date Of Birth: <b>` + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + `</b><br>
+        SIMS Name: <b>` + data[i].DisplayName + `</b><br>
+        Legal Name: <b>` + data[i].DisplayNameLegal + `</b><br>
+        Primary Email: <b><a href="mailto:` + data[i].Email + `" target="_none">` + data[i].Email + `</a></b><br>
+        Secondary Email: <b><a href="mailto:` + data[i].EmailAddress + `" target="_none">` + data[i].EmailAddress + `</a></b><br>
+        Exam Number: <b>` + examNumber + `</b><br>
+        First Name: <b>` + data[i].FirstName + `</b><br>
+        Legal First Name: <b>` + data[i].FirstNameLegal + `</b><br>
         House: <b>` + data[i].House + `</b><br>
         ID: <b>` + data[i].ID + `</b><br>
-        LastName: <b>` + data[i].LastName + `</b><br>
-        LastNameLegal: <b>` + data[i].LastNameLegal + `</b><br>
+        Last Name: <b>` + data[i].LastName + `</b><br>
+        Legal Last Name: <b>` + data[i].LastNameLegal + `</b><br>
         Main: <b>` + data[i].Main + `</b><br>
-        Reg: <b>` + data[i].Reg + `</b><br>
-        UPN: <b>` + data[i].UPN + `</b><br>
-        Year: <b>` + data[i].Year + `</b><br>
-        Year_x0020_of_x0020_entry: <b>` + data[i].Year_x0020_of_x0020_entry + `</b><br>
-        primary_id: <b>` + data[i].primary_id + `
+        Form: <b>` + data[i].Reg + `</b><br>
+        UPN: <b>` + upn + `</b><br>
+        Year Group: <b>` + data[i].Year + `</b><br>
+        Year Of Entry: <b>` + data[i].Year_x0020_of_x0020_entry + `</b><br>
+        Primary ID: <b>` + data[i].primary_id + `
         </p>
     </div>`
 
