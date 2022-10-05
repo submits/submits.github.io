@@ -37,7 +37,13 @@
     <h1>Student DB Search</h1>
     <p>Search through a database of every student in the school <i>(Some students may have duplicates due to multiple emails).</i></p>
     <input id="name" type="text"><br><br>
+    <label for="methods">Choose a method:</label>
+    <select name="methods" id="methods">
+        <option value="startsWith">startsWith()</option>
+        <option value="includes">includes()</option>
+      </select><br><br>
     <button id="searchName">Search by Name</button> <button id="searchForm">Search by Form</button> <button id="searchHouse">Search by House</button> <button id="searchDob">Search by DOB</button> <button id="searchEmail">Search by Email</button> <button id="searchExam">Search by Exam Number</button> <button id="searchUpn">Search by UPN</button> <button id="searchEntry">Search by Entry Year</button><br><br>
+    
     <label>Results Found: <label style="font-weight: bold;" id="resultsFound">0</label></label>
 </div>
 
