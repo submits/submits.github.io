@@ -92,7 +92,7 @@ let studentDB;
     }
   }
 
-  function dbSearch(name, type){
+   function dbSearch(name, type){
 
     let results = []
     for (let i = 0; i < studentDB.SuperStarReport.Record.length; i++) {
@@ -100,19 +100,42 @@ let studentDB;
 
         if(type == "name")
         {
-            if(studentDB.SuperStarReport.Record[i].DisplayName.toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+             if(document.getElementById("methods").value == "includes")
+             {
+              if(studentDB.SuperStarReport.Record[i].DisplayName.toUpperCase().includes(name.toUpperCase()))
+              {
+                  results.push(studentDB.SuperStarReport.Record[i])
+              }
+             }
+
+             if(document.getElementById("methods").value == "startsWith")
+             {
+              if(studentDB.SuperStarReport.Record[i].DisplayName.toUpperCase().startsWith(name.toUpperCase()))
+              {
+                  results.push(studentDB.SuperStarReport.Record[i])
+              }
+             }
+            
         }
 
         else if(type == "form")
         {
             try{
-            if(studentDB.SuperStarReport.Record[i].Reg.toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+              if(document.getElementById("methods").value == "includes")
+              {
+               if(studentDB.SuperStarReport.Record[i].Reg.toUpperCase().includes(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
+ 
+              if(document.getElementById("methods").value == "startsWith")
+              {
+               if(studentDB.SuperStarReport.Record[i].Reg.toUpperCase().startsWith(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
         }
         catch{
             console.log("idk")
@@ -122,78 +145,145 @@ let studentDB;
         else if(type == "house")
         {
             try{
-            if(studentDB.SuperStarReport.Record[i].House.toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+              if(document.getElementById("methods").value == "includes")
+              {
+               if(studentDB.SuperStarReport.Record[i].House.toUpperCase().includes(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
+ 
+              if(document.getElementById("methods").value == "startsWith")
+              {
+               if(studentDB.SuperStarReport.Record[i].House.toUpperCase().startsWith(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
         }
         catch{
-             console.log("Selected student has no data!")
+            console.log("idk")
         }
         }
 
         else if(type == "dob")
         {
             try{
-            if(studentDB.SuperStarReport.Record[i].DOB.toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+              if(document.getElementById("methods").value == "includes")
+              {
+               if(studentDB.SuperStarReport.Record[i].DOB.toUpperCase().includes(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
+ 
+              if(document.getElementById("methods").value == "startsWith")
+              {
+               if(studentDB.SuperStarReport.Record[i].DOB.toUpperCase().startsWith(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
         }
             catch{
-                 console.log("Selected student has no data!")
+                console.log("idk")
             }
         }
 
         else if(type == "email")
         {
             try{
-            if(studentDB.SuperStarReport.Record[i].EmailAddress.toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+           if(document.getElementById("methods").value == "includes")
+              {
+               if(studentDB.SuperStarReport.Record[i].EmailAddress.toUpperCase().includes(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
+ 
+              if(document.getElementById("methods").value == "startsWith")
+              {
+               if(studentDB.SuperStarReport.Record[i].EmailAddress.toUpperCase().startsWith(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
         }
             catch{
-                 console.log("Selected student has no data!")
+                console.log("idk")
             }
         }
 
         else if(type == "exam")
         {
+          
             try{
-            if(studentDB.SuperStarReport.Record[i].ExamNumber.toString().toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+              if(document.getElementById("methods").value == "includes")
+              {
+               if(studentDB.SuperStarReport.Record[i].ExamNumber.toString().toUpperCase().includes(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
+ 
+              if(document.getElementById("methods").value == "startsWith")
+              {
+               if(studentDB.SuperStarReport.Record[i].ExamNumber.toString().toUpperCase().startsWith(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
         }
             catch{
-                 console.log("Selected student has no data!")
+                console.log("idk")
             }
         }
 
         else if(type == "upn")
         {
             try{
-            if(studentDB.SuperStarReport.Record[i].UPN.toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+              if(document.getElementById("methods").value == "includes")
+              {
+               if(studentDB.SuperStarReport.Record[i].UPN.toUpperCase().includes(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
+ 
+              if(document.getElementById("methods").value == "startsWith")
+              {
+               if(studentDB.SuperStarReport.Record[i].UPN.toUpperCase().startsWith(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
         }
             catch{
-                 console.log("Selected student has no data!")
+                console.log("idk")
             }
         }
 
         else if(type == "entry")
         {
             try{
-            if(studentDB.SuperStarReport.Record[i].Year_x0020_of_x0020_entry.toString().toUpperCase().startsWith(name.toUpperCase()))
-            {
-                results.push(studentDB.SuperStarReport.Record[i])
-            }
+              if(document.getElementById("methods").value == "includes")
+              {
+               if(studentDB.SuperStarReport.Record[i].Year_x0020_of_x0020_entry.toString().toUpperCase().includes(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
+ 
+              if(document.getElementById("methods").value == "startsWith")
+              {
+               if(studentDB.SuperStarReport.Record[i].Year_x0020_of_x0020_entry.toString().toUpperCase().startsWith(name.toUpperCase()))
+               {
+                   results.push(studentDB.SuperStarReport.Record[i])
+               }
+              }
         }
             catch{
-                console.log("Selected student has no data!")
+                console.log("idk")
             }
         }
         
