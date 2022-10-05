@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+*{
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    padding-top: 50px;
+        padding-bottom: 50px;
+        text-align: center;
+}
+
+#incorrect{
+    color: red;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: none;
+}
+</style>
+    </head>
+    <body>
+        <h1>Password Required</h1>
+        <p>To gain access to the content on this site, please enter the password. <i>(This only needs to be done once per device.)</i></p>
+        <div id="incorrect">
+            The password you have provided is incorrect.
+        </div>
+        <input type="text" id="password">
+        <button id="enter">Enter</button>
+    </body>
+
+    <script>
+
+        window.onload = function(){
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get('incorrect') != null)
+            {
+                document.getElementById("incorrect").style.display = "block"
+            }
+
+            document.getElementById("enter").onclick = function(){
+
+                localStorage.setItem("sitePassword", document.getElementById("password").value)
+                window.location.href = "https://submits.github.io"
+            }
+        }
+    </script>
+</html>
