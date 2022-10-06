@@ -10,7 +10,7 @@ let studentDB;
       window.location.href = "/auth"
     }
     else{
-      if(CryptoJS.MD5(localStorage.getItem("sitePassword")).toString() != "0762ee587976f941fc791eef8a3b609a")
+      if(CryptoJS.MD5(localStorage.getItem("sitePassword")).toString() != "2629eb37480e2a9955a6b34c3f21d558")
       {
       window.location.href = "/auth?incorrect=true"
       }
