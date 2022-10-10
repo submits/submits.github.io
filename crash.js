@@ -79,6 +79,24 @@ window.onload = async function(){
 
     document.getElementById("profitedGames").innerHTML = "<label style=\"font-weight:bold\">" + profitableGames + "<label style=\"color:" + percentageToColour(((profitableGames / data.history.length) * 100)) + "\"> " + (Math.round(((profitableGames / data.history.length) * 100) * 100) / 100) + "%</label></label>"
     document.getElementById("notprofitedGames").innerHTML = "<label style=\"font-weight:bold\">" + (data.history.length - profitableGames) + "<label style=\"color:" + percentageToColour((((data.history.length - profitableGames) / data.history.length) * 100)) + "\"> " + (Math.round((((data.history.length - profitableGames) / data.history.length) * 100) * 100) / 100) + "%</label></label>"
+
+    if(profitableGames >= 0 && profitableGames < 20)
+    {
+        document.getElementById("advice").innerHTML = `<label><b>Payout less than usual</b></label>`
+    }
+    else if(profitableGames >= 20 && profitableGames < 25)
+    {
+        document.getElementById("advice").innerHTML = `<label><b>Payout is average</b></label>`
+    }
+    else if(profitableGames >= 25 && profitableGames < 30)
+    {
+        document.getElementById("advice").innerHTML = `<label><b>Payout is above average</b></label>`
+    }
+
+    else if(profitableGames >= 30 && profitableGames < 35)
+    {
+        document.getElementById("advice").innerHTML = `<label><b>Payout is well above average</b></label>`
+    }
 }
 
 
@@ -120,7 +138,7 @@ function percentageToColour(percentage)
     {
         return "#6fed00"
     }
-    else if(percentage >= 90 && percentage < 100)
+    else if(percentage >= 90 && percentage <= 100)
     {
         return "#00ff00"
     }
@@ -165,7 +183,7 @@ function crashToColour(crash)
     {
         return "#6fed00"
     }
-    else if(crash >= 50.00 && crash < 100.00)
+    else if(crash >= 50.00 && crash <= 100.00)
     {
         return "#00ff00"
     }
