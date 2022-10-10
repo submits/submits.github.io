@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="crash.js"></script>
+        <title>Crash Analyser</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');        *{
+            font-family: 'Titillium Web';
+        }
+        body{
+    color: white;
+            background-color: #080808;
+            text-align: center;
+            margin: auto;
+            padding-top: 40px;
+            padding-bottom: 40px;
+}
+
+
+
+        .userStats{
+            background-color: #141414;
+            border-radius: 8px;
+            padding: 10px;
+            width: 455px;
+            display: block;
+            margin-bottom: 15px;
+            margin-left: 15px;
+            text-align: left;
+          
+        }
+
+      
+        .wrapper {
+  display: flex;
+  color: white;
+
+}
+
+.left {
+  flex: 0 0 50px;
+}
+
+.right {
+  flex: 1;
+  padding-left: 10px;
+
+}
+
+.userImage{
+    border-radius: 50%;
+    width: 95%;
+}
+.username{
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.betInfo{
+    font-size: 14px;
+    display: block;
+    margin-bottom: 0px;
+}
+
+.info{
+    font-weight: 500;
+}
+
+.gameDiv{
+    background-color: #101010;
+            border-radius: 8px;
+            padding: 10px;
+            width: 500px;
+            text-align: center;
+            margin: auto;
+}
+
+.ok{
+    font-weight: 500;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 16px;
+}
+
+.ok2{
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.ok3{
+    font-weight: 500;
+    font-size: 16px;
+}
+
+
+@media only screen and (max-device-width: 640px) {
+    
+    body{
+
+zoom: 65%;
+}
+
+
+}
+    
+@media only screen and (max-device-width: 768px) {
+    
+    body{
+        zoom: 65%;
+}
+
+
+
+
+
+}
+
+    </style>
+    <body>
+        <h1>Crash Analyser</h1>
+       <p>Games With More Than 50% User Profits: <label id="profitedGames">Unknown</label><br>Games With Less Than 50% User Profits: : <label id="notprofitedGames">Unknown</label></p><br>
+        <div id="stats">
+            Loading...
+        </div>
+    </body>
+    
+</html>
