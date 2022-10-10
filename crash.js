@@ -78,7 +78,6 @@ window.onload = async function(){
     }
 
     document.getElementById("profitedGames").innerHTML = "<label style=\"font-weight:bold\">" + profitableGames + "<label style=\"color:" + percentageToColour(((profitableGames / data.history.length) * 100)) + "\"> " + (Math.round(((profitableGames / data.history.length) * 100) * 100) / 100) + "%</label></label>"
-  //  document.getElementById("notprofitedGames").innerHTML = "<label style=\"font-weight:bold\">" + (data.history.length - profitableGames) + "<label style=\"color:" + percentageToColour((((data.history.length - profitableGames) / data.history.length) * 100)) + "\"> " + (Math.round((((data.history.length - profitableGames) / data.history.length) * 100) * 100) / 100) + "%</label></label>"
 
     if(profitableGames >= 0 && profitableGames < 20)
     {
