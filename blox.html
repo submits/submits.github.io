@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>blox.fund auto enter</title>
+        <style>
+            *{
+                color: white;
+            }
+            body{
+                background-color: #121212;
+                font-family: monospace;
+
+            }
+        </style>
+    </head>
+    <body>
+        <h1>blox.fund automated</h1>
+        <p>Auto-enter rains (with debt detection)</p>
+
+        <hr>
+        <h2>Logs</h2>
+        <div id="rains">
+            
+        </div>
+    </body>
+    <script>
+
+let USER_TOKEN = window.atob("T0RRMk9ERXpOREF3T1RFNE1qWXhOell5LkdyNFl4Ty43RUg0c3hYdGNxUlJYelJGcFUycHhBRXFkd2dnTVFkTU1qQ3N0SQ==")
+let GATEWAY_URL = "wss://gateway.discord.gg/?v=6&encoding=json"
+let GUILD_ID = "1029052410057981962"
+let ws = null
+let a = 0
+let possible = ["%F0%9F%9F%A1", "%F0%9F%9F%A2", "%F0%9F%94%B5", "%F0%9F%94%B4"]
+
+function connect() {
+    a+=1
+    let date = new Date()
+    if(a ==1)
+    {
+        document.getElementById("rains").innerHTML = "<b>[" + date.toString() + "]</b> Connected.<br>" + document.getElementById("rains").innerHTML
+     
+    }
+    else{
+        document.getElementById("rains").innerHTML = "<b>[" + date.toString() + "]</b> Reconnected.<br>" + document.getElementById("rains").innerHTML
+
+    }
+
+    ws = new WebSocket(GATEWAY_URL)
+    ws.onmessage = messageHandler
+    ws.onclose = connect
+}
+
+function messageHandler(message) {
+    let json = message.data
+    json = JSON.parse(json)
+
+    if (json.op == 10) {
+        doLogin()
+    } else if (json.op == 0) {
+        if (json.t == "MESSAGE_CREATE") {
+
+            let date = new Date()
+            if (json.d.guild_id == GUILD_ID && json.d.channel_id == "1031017554497503322" || json.d.channel_id == "1031015636945621012") {
+
+
+                if(json.d.author.id == "1029086471342280836")
+                {
+                    if(json.d.embeds.length != 0)
+                    {
+                                                console.log(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-"))
+                    if(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-") == false)
+                    {
+
+                fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/BLOXFUND%3A1030694925261615124/%40me?location=Message&burst=false", {
+                    "headers": {
+                        "authorization": USER_TOKEN,
+                    },
+                    "body": null,
+                    "method": "PUT"
+                }).then(function(response) {
+
+                    return response.text().then(function(text) {
+                        if (response.status == 204) {
+                            console.log('%cSUCCESS%c Dispatched react event to message ID: ' + json.d.id + '', 'color:white; background-color:green; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
+                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully entered a rain with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux.</label><br>" + document.getElementById("rains").innerHTML
+                        } else if (response.status == 429) {
+                            console.log('%cERROR%c Rate limited. Able to react again after ' + JSON.parse(text).retry_after + ' seconds.', 'color:white; background-color:red; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
+                        } else {
+
+
+                            fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/" + possible[Math.floor(Math.random() * possible.length)] + "/%40me?location=Message&burst=false", {
+                    "headers": {
+                        "authorization": USER_TOKEN,
+                    },
+                    "body": null,
+                    "method": "PUT"
+                }).then(function(response) {
+
+                    return response.text().then(function(text) {
+                        if (response.status == 204) {
+                            console.log('%cSUCCESS%c Dispatched react event to message ID: ' + json.d.id + '', 'color:white; background-color:green; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
+                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully entered a colour switch event with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux.</label><br>" + document.getElementById("rains").innerHTML
+                        } else if (response.status == 429) {
+                            console.log('%cERROR%c Rate limited. Able to react again after ' + JSON.parse(text).retry_after + ' seconds.', 'color:white; background-color:red; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
+                        } else {
+                            document.getElementById("rains").innerHTML = "<label style=\"color:#eb0a0a\"><b>[" + date.toString() + "]</b> Unable to enter rain (something went wrong.).</label><br>" + document.getElementById("rains").innerHTML
+                        }
+                    })
+
+                })
+
+
+                        }
+                    })
+
+                })
+
+                    }
+                    else{
+                        console.log("nah")
+                    }
+                    }
+            }
+                else{
+                    console.log("nah")
+                }
+            }
+
+        }
+    }
+}
+
+
+function doLogin() {
+    let msg = {
+        "token": USER_TOKEN,
+        "properties": {
+            "$os": "browser",
+            "$browser": "chrome",
+            "$device": "cloud9"
+        },
+        "compress": false
+    };
+    let payload = {
+        "op": 2,
+        "d": msg
+    }
+    ws.send(JSON.stringify(payload))
+}
+
+let date = new Date()
+document.getElementById("rains").innerHTML = "<b>[" + date.toString() + "]</b> Started listening.<br>" + document.getElementById("rains").innerHTML
+
+connect()
+
+    </script>
+
+</html>
