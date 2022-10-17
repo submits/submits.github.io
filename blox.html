@@ -111,7 +111,13 @@ async function messageHandler(message) {
                     {
                         console.log("RAIN")
 
-                        await sleep(400)
+                         if(json.d.channel_id == "1031017554497503322")
+                        {
+                            await sleep(5000)
+                        }
+                        else{
+                            await sleep(400)
+                        }
                 fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/bloxfundwhite%3A1031357874514972682/%40me?location=Message&burst=false", {
                     "headers": {
                         "authorization": USER_TOKEN,
