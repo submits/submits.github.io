@@ -18,19 +18,31 @@
         <p>Auto-enter rains (with debt detection)</p>
 
         <hr>
-        <h2>Logs</h2>
+        <h2>Logs [Total Farmed: <label id="total">0</label>]</h2>
         <div id="rains">
             
         </div>
     </body>
     <script>
 
+
+function sleep(time) {
+  return new Promise(resolve => {
+      setTimeout(() => {
+          resolve();
+      }, time);
+  });
+}
+
+
+
 let USER_TOKEN = window.atob("T0RRMk9ERXpOREF3T1RFNE1qWXhOell5LkdyNFl4Ty43RUg0c3hYdGNxUlJYelJGcFUycHhBRXFkd2dnTVFkTU1qQ3N0SQ==")
 let GATEWAY_URL = "wss://gateway.discord.gg/?v=6&encoding=json"
 let GUILD_ID = "1029052410057981962"
 let ws = null
 let a = 0
-let possible = ["%F0%9F%9F%A1", "%F0%9F%9F%A2", "%F0%9F%94%B5", "%F0%9F%94%B4"]
+ let possible = [{code: "%F0%9F%9F%A1", colour: "🟡"},{code: "%F0%9F%9F%A2", colour: "🟢"},{code: "%F0%9F%94%B5", colour: "🔵"},{code: "%F0%9F%94%B4", colour: "🔴"}]
+ let chosen = ""
 
 function connect() {
     a+=1
@@ -50,7 +62,7 @@ function connect() {
     ws.onclose = connect
 }
 
-function messageHandler(message) {
+async function messageHandler(message) {
     let json = message.data
     json = JSON.parse(json)
 
@@ -67,11 +79,40 @@ function messageHandler(message) {
                 {
                     if(json.d.embeds.length != 0)
                     {
-                                                console.log(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-"))
-                    if(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-") == false)
+
+                        if(json.d.embeds[0].title == "Color Switch Rain has ended 🌈")
                     {
 
-                fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/BLOXFUND%3A1030694925261615124/%40me?location=Message&burst=false", {
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Colour switch event ended! Correct colour: <b>" + json.d.embeds[0].fields[2].value + "</b> | Reward: <b>" + json.d.embeds[0].fields[1].value.replace(/\*/g, "") + "</b></label><br>" + document.getElementById("rains").innerHTML
+                        if(chosen == json.d.embeds[0].fields[2].value)
+                        {
+                            if(parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0]) > 0.00)
+                        {
+                            document.getElementById("total").innerHTML = parseFloat(document.getElementById("total").innerHTML) + parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0])
+
+                        }
+
+                        }
+                    }
+
+                    if(json.d.embeds[0].title == "🌧️ A rain has ended!")
+                    {
+
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Rain ended! Reward: <b>" + json.d.embeds[0].fields[1].value.replace(/\*/g, "") + "</b></label><br>" + document.getElementById("rains").innerHTML
+                        if(parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0]) > 0.00)
+                        {
+                            document.getElementById("total").innerHTML = parseFloat(document.getElementById("total").innerHTML) + parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0])
+
+                        }
+                    }
+
+
+                    if(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-") == false && json.d.embeds[0].title == "🌧️ A rain has started!")
+                    {
+                        console.log("RAIN")
+
+                        await sleep(400)
+                fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/bloxfundwhite%3A1031357874514972682/%40me?location=Message&burst=false", {
                     "headers": {
                         "authorization": USER_TOKEN,
                     },
@@ -88,7 +129,26 @@ function messageHandler(message) {
                         } else {
 
 
-                            fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/" + possible[Math.floor(Math.random() * possible.length)] + "/%40me?location=Message&burst=false", {
+                           console.log("ok")
+
+
+                        }
+                    })
+
+                })
+
+                    }
+                    else{
+                        if(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-") == false && json.d.embeds[0].title == "Color Switch 🌈")
+                    {
+                            await sleep(2000)
+                            
+                            let z = possible[Math.floor(Math.random() * possible.length)]
+
+                            chosen = z.colour
+
+
+                        fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/" + z.code + "/%40me?location=Message&burst=false", {
                     "headers": {
                         "authorization": USER_TOKEN,
                     },
@@ -99,7 +159,7 @@ function messageHandler(message) {
                     return response.text().then(function(text) {
                         if (response.status == 204) {
                             console.log('%cSUCCESS%c Dispatched react event to message ID: ' + json.d.id + '', 'color:white; background-color:green; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
-                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully entered a colour switch event with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux.</label><br>" + document.getElementById("rains").innerHTML
+                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully entered a colour switch event with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux. Chosen colour: " + z.colour + "</label><br>" + document.getElementById("rains").innerHTML
                         } else if (response.status == 429) {
                             console.log('%cERROR%c Rate limited. Able to react again after ' + JSON.parse(text).retry_after + ' seconds.', 'color:white; background-color:red; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
                         } else {
@@ -108,16 +168,7 @@ function messageHandler(message) {
                     })
 
                 })
-
-
-                        }
-                    })
-
-                })
-
                     }
-                    else{
-                        console.log("nah")
                     }
                     }
             }
@@ -153,6 +204,12 @@ document.getElementById("rains").innerHTML = "<b>[" + date.toString() + "]</b> S
 
 connect()
 
+
+
+
     </script>
 
 </html>
+
+
+
