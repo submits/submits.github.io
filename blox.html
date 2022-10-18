@@ -11,6 +11,41 @@
                 font-family: monospace;
 
             }
+
+            .info{
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #181818;
+        }
+
+        input{
+            margin-top: 10px;
+            border: none;
+            color: white;
+            font-family: monospace;
+            width: 200px;
+            height: 20px;
+            background-color: #212121;
+            border-radius: 5px;
+        }
+
+        button{
+            border: none;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            cursor: pointer;
+            color: white;
+            font-family: monospace;
+            background-color: rgb(89, 21, 184);
+            transition: all .3s ease;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        button:hover{
+            background-color: rgb(71, 20, 144);
+        }
         </style>
     </head>
     <body>
@@ -39,6 +74,7 @@ function sleep(time) {
 let USER_TOKEN = window.atob("T0RRMk9ERXpOREF3T1RFNE1qWXhOell5LkdyNFl4Ty43RUg0c3hYdGNxUlJYelJGcFUycHhBRXFkd2dnTVFkTU1qQ3N0SQ==")
 let GATEWAY_URL = "wss://gateway.discord.gg/?v=6&encoding=json"
 let GUILD_ID = "1029052410057981962"
+let USER_ID = "846813400918261762"
 let ws = null
 let a = 0
  let possible = [{code: "%F0%9F%9F%A1", colour: "🟡"},{code: "%F0%9F%9F%A2", colour: "🟢"},{code: "%F0%9F%94%B5", colour: "🔵"},{code: "%F0%9F%94%B4", colour: "🔴"}]
@@ -62,6 +98,18 @@ function connect() {
     ws.onclose = connect
 }
 
+function sendCaptcha(channelid, id)
+{
+    fetch("https://discord.com/api/v9/channels/" + channelid + "/messages", {
+  "headers": {
+    "authorization": USER_TOKEN,
+    "content-type": "application/json",
+  },
+  "body": "{\"content\":\"" + document.getElementById("message-" + id).value + "\",\"tts\":false}",
+  "method": "POST",
+});
+}
+
 async function messageHandler(message) {
     let json = message.data
     json = JSON.parse(json)
@@ -72,14 +120,50 @@ async function messageHandler(message) {
         if (json.t == "MESSAGE_CREATE") {
 
             let date = new Date()
+
+            if(json.d.channel_id == "1031701022118260786" || json.d.channel_id == "1031719067029086248" || json.d.channel_id == "1031719089950965780"){
+
+                if(json.d.author.id == "1030597254215643136")
+                {
+                    if(json.d.content == "<@" + USER_ID + ">")
+                    {
+
+                        if(json.d.embeds[0].title == "Success!")
+                    {
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully verified captcha.</label><br>" + document.getElementById("rains").innerHTML
+
+                    }
+
+                    if(json.d.embeds[0].title == "Oops!")
+                    {
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#eb0a0a\"><b>[" + date.toString() + "]</b> Captcha failed! try again!</label><br>" + document.getElementById("rains").innerHTML
+
+                    }
+
+                    if(json.d.embeds[0].title == "Rain Captcha")
+                    {
+                        document.getElementById("rains").innerHTML = "<br><div class=\"info\"><img src=\"" + json.d.attachments[0].url + "\" style=\"width:250px; border-radius:5px\"><br><input id=\"message-" + json.d.id + "\" type=\"text\"><br><button onclick=\"sendCaptcha('" + json.d.channel_id + "', '" + json.d.id + "')\">Submit</button></div><br><br>" + document.getElementById("rains").innerHTML
+
+                    }
+                    }
+                   
+                }
+
+            }
+
+ 
+
+
             if (json.d.guild_id == GUILD_ID && json.d.channel_id == "1031017554497503322" || json.d.channel_id == "1031792694978162770") {
 
 
-                if(json.d.author.id == "1029086471342280836")
+                if(json.d.author.id == "1030597254215643136")
                 {
+
                     if(json.d.embeds.length != 0)
                     {
 
+                        console.log("json.d.embeds[0].title")
                         if(json.d.embeds[0].title == "Color Switch Rain has ended 🌈")
                     {
 
@@ -110,14 +194,10 @@ async function messageHandler(message) {
                     if(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-") == false && json.d.embeds[0].title == "🌧️ A rain has started!")
                     {
                         console.log("RAIN")
-
-                         if(json.d.channel_id == "1031017554497503322")
-                        {
-                            await sleep(5000)
-                        }
-                        else{
-                            await sleep(400)
-                        }
+                    
+                            await sleep(2000)
+                        
+                           
                 fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/bloxfundwhite%3A1031357874514972682/%40me?location=Message&burst=false", {
                     "headers": {
                         "authorization": USER_TOKEN,
@@ -147,7 +227,7 @@ async function messageHandler(message) {
                     else{
                         if(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-") == false && json.d.embeds[0].title == "Color Switch 🌈")
                     {
-                            await sleep(2000)
+                            await sleep(2500)
                             
                             let z = possible[Math.floor(Math.random() * possible.length)]
 
