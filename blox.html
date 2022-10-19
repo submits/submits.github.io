@@ -8,7 +8,7 @@
             }
             body{
                 background-color: #121212;
-                font-family: monospace;
+                font-family: 'Segoe UI';
 
             }
 
@@ -71,38 +71,45 @@ function sleep(time) {
 
 
 
-let USER_TOKEN = window.atob("T0RRMk9ERXpOREF3T1RFNE1qWXhOell5LkdyNFl4Ty43RUg0c3hYdGNxUlJYelJGcFUycHhBRXFkd2dnTVFkTU1qQ3N0SQ==")
+let USER_TOKEN = [{token: window.atob("T0RNd016VXdOVEUyT1RnMk56QTRNREk0LkdJOUZSaC5fbmVHajZKemZqVGdaZTBfOGhrNEoxOXNISjZzOHRRUjMxcTN5Zw=="), id: "830350516986708028"}, {token: window.atob("TmpjM05EVXhPVEkzTnpZek5UVXdNakU1LkdoY2c0aC5wcks5dXVrNEg4c2Q0eXk4Wi1SVy14Y01FZDFGUy1URTBjMGxGaw=="), id: "677451927763550219"}]
+
+
 let GATEWAY_URL = "wss://gateway.discord.gg/?v=6&encoding=json"
 let GUILD_ID = "1029052410057981962"
-let USER_ID = "846813400918261762"
 let ws = null
+
 let a = 0
+
+
  let possible = [{code: "%F0%9F%9F%A1", colour: "🟡"},{code: "%F0%9F%9F%A2", colour: "🟢"},{code: "%F0%9F%94%B5", colour: "🔵"},{code: "%F0%9F%94%B4", colour: "🔴"}]
- let chosen = ""
+ let chosen = []
 
 function connect() {
     a+=1
     let date = new Date()
     if(a ==1)
     {
-        document.getElementById("rains").innerHTML = "<b>[" + date.toString() + "]</b> Connected.<br>" + document.getElementById("rains").innerHTML
+        document.getElementById("rains").innerHTML = "<b>[" + date.toTimeString().split(" ")[0] + "]</b> Connected.<br>" + document.getElementById("rains").innerHTML
      
     }
     else{
-        document.getElementById("rains").innerHTML = "<b>[" + date.toString() + "]</b> Reconnected.<br>" + document.getElementById("rains").innerHTML
+        document.getElementById("rains").innerHTML = "<b>[" + date.toTimeString().split(" ")[0]+ "]</b> Reconnected on main socket.<br>" + document.getElementById("rains").innerHTML
 
     }
 
     ws = new WebSocket(GATEWAY_URL)
     ws.onmessage = messageHandler
     ws.onclose = connect
+
 }
 
-function sendCaptcha(channelid, id)
+
+
+function sendCaptcha(channelid, id, token)
 {
     fetch("https://discord.com/api/v9/channels/" + channelid + "/messages", {
   "headers": {
-    "authorization": USER_TOKEN,
+    "authorization": token,
     "content-type": "application/json",
   },
   "body": "{\"content\":\"" + document.getElementById("message-" + id).value + "\",\"tts\":false}",
@@ -122,27 +129,29 @@ async function messageHandler(message) {
             let date = new Date()
 
             if(json.d.channel_id == "1031701022118260786" || json.d.channel_id == "1031719067029086248" || json.d.channel_id == "1031719089950965780"){
-
                 if(json.d.author.id == "1030597254215643136")
                 {
-                    if(json.d.content == "<@" + USER_ID + ">")
+                    let index = USER_TOKEN.findIndex(function(item, z) {
+        return item.id === json.d.content.replace(/\</g, "").replace(/\>/g, "").replace(/\@/g, "")
+      });
+                    if(index != -1)
                     {
 
                         if(json.d.embeds[0].title == "Success!")
                     {
-                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully verified captcha.</label><br>" + document.getElementById("rains").innerHTML
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toTimeString().split(" ")[0] + "]</b> Successfully verified captcha.</label><br>" + document.getElementById("rains").innerHTML
 
                     }
 
                     if(json.d.embeds[0].title == "Oops!")
                     {
-                        document.getElementById("rains").innerHTML = "<label style=\"color:#eb0a0a\"><b>[" + date.toString() + "]</b> Captcha failed! try again!</label><br>" + document.getElementById("rains").innerHTML
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#eb0a0a\"><b>[" + date.toTimeString().split(" ")[0]+ "]</b> Captcha failed! try again!</label><br>" + document.getElementById("rains").innerHTML
 
                     }
 
                     if(json.d.embeds[0].title == "Rain Captcha")
                     {
-                        document.getElementById("rains").innerHTML = "<br><div class=\"info\"><img src=\"" + json.d.attachments[0].url + "\" style=\"width:250px; border-radius:5px\"><br><input id=\"message-" + json.d.id + "\" type=\"text\"><br><button onclick=\"sendCaptcha('" + json.d.channel_id + "', '" + json.d.id + "')\">Submit</button></div><br><br>" + document.getElementById("rains").innerHTML
+                        document.getElementById("rains").innerHTML = "<br><div class=\"info\"><img src=\"" + json.d.attachments[0].url + "\" style=\"width:250px; border-radius:5px\"><br><input id=\"message-" + json.d.id + "\" type=\"text\"><br><button onclick=\"sendCaptcha('" + json.d.channel_id + "', '" + json.d.id + "', '" + USER_TOKEN[index].token + "')\">Submit</button></div><br><br>" + document.getElementById("rains").innerHTML
 
                     }
                     }
@@ -166,27 +175,33 @@ async function messageHandler(message) {
                         console.log("json.d.embeds[0].title")
                         if(json.d.embeds[0].title == "Color Switch Rain has ended 🌈")
                     {
-
-                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Colour switch event ended! Correct colour: <b>" + json.d.embeds[0].fields[2].value + "</b> | Reward: <b>" + json.d.embeds[0].fields[1].value.replace(/\*/g, "") + "</b></label><br>" + document.getElementById("rains").innerHTML
-                        if(chosen == json.d.embeds[0].fields[2].value)
+                        
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toTimeString().split(" ")[0] + "]</b> Colour switch event ended! Correct colour: <b>" + json.d.embeds[0].fields[2].value + "</b> | Reward: <b>" + json.d.embeds[0].fields[1].value.replace(/\*/g, "") + "</b></label><br>" + document.getElementById("rains").innerHTML
+                        for (let k = 0; k < chosen.length; k++) {
+                            if(chosen[k] == json.d.embeds[0].fields[2].value)
                         {
                             if(parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0]) > 0.00)
                         {
-                            document.getElementById("total").innerHTML = parseFloat(document.getElementById("total").innerHTML) + parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0])
+                            document.getElementById("total").innerHTML = (Math.round((parseFloat(document.getElementById("total").innerHTML) + parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0])) * 100) / 100) + "R$"
 
                         }
 
                         }
+                        }   
+                        chosen = []
+                       
+                        
                     }
 
                     if(json.d.embeds[0].title == "🌧️ A rain has ended!")
                     {
 
-                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Rain ended! Reward: <b>" + json.d.embeds[0].fields[1].value.replace(/\*/g, "") + "</b></label><br>" + document.getElementById("rains").innerHTML
+                        document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toTimeString().split(" ")[0] + "]</b> Rain ended! Reward: <b>" + json.d.embeds[0].fields[1].value.replace(/\*/g, "") + "</b></label><br>" + document.getElementById("rains").innerHTML
                         if(parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0]) > 0.00)
                         {
-                            document.getElementById("total").innerHTML = parseFloat(document.getElementById("total").innerHTML) + parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0])
-
+                            for (let i = 0; i < USER_TOKEN.length; i++) {
+                            document.getElementById("total").innerHTML = (Math.round((parseFloat(document.getElementById("total").innerHTML) + parseFloat(json.d.embeds[0].fields[1].value.replace(/\*/g, "").split(" R$")[0])) * 100) / 100) + "R$"
+                            }
                         }
                     }
 
@@ -197,10 +212,12 @@ async function messageHandler(message) {
                     
                             await sleep(2000)
                         
+
+                            for (let i = 0; i < USER_TOKEN.length; i++) {
                            
                 fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/bloxfundwhite%3A1031357874514972682/%40me?location=Message&burst=false", {
                     "headers": {
-                        "authorization": USER_TOKEN,
+                        "authorization": USER_TOKEN[i].token,
                     },
                     "body": null,
                     "method": "PUT"
@@ -209,7 +226,7 @@ async function messageHandler(message) {
                     return response.text().then(function(text) {
                         if (response.status == 204) {
                             console.log('%cSUCCESS%c Dispatched react event to message ID: ' + json.d.id + '', 'color:white; background-color:green; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
-                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully entered a rain with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux.</label><br>" + document.getElementById("rains").innerHTML
+                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toTimeString().split(" ")[0] + " / " + USER_TOKEN[i].id + "]</b> Successfully entered a rain with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux.</label><br>" + document.getElementById("rains").innerHTML
                         } else if (response.status == 429) {
                             console.log('%cERROR%c Rate limited. Able to react again after ' + JSON.parse(text).retry_after + ' seconds.', 'color:white; background-color:red; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
                         } else {
@@ -223,20 +240,29 @@ async function messageHandler(message) {
 
                 })
 
+            }
+
+
+
                     }
                     else{
                         if(json.d.embeds[0].description.split("**")[1].split(" R$")[0].includes("-") == false && json.d.embeds[0].title == "Color Switch 🌈")
                     {
                             await sleep(2500)
                             
-                            let z = possible[Math.floor(Math.random() * possible.length)]
+                            
 
-                            chosen = z.colour
 
+
+                            for (let i = 0; i < USER_TOKEN.length; i++) {
+
+                                let z = possible[Math.floor(Math.random() * possible.length)]
+
+                                chosen.push(z.colour)
 
                         fetch("https://discord.com/api/v9/channels/" + json.d.channel_id + "/messages/" + json.d.id + "/reactions/" + z.code + "/%40me?location=Message&burst=false", {
                     "headers": {
-                        "authorization": USER_TOKEN,
+                        "authorization": USER_TOKEN[i].token,
                     },
                     "body": null,
                     "method": "PUT"
@@ -245,15 +271,17 @@ async function messageHandler(message) {
                     return response.text().then(function(text) {
                         if (response.status == 204) {
                             console.log('%cSUCCESS%c Dispatched react event to message ID: ' + json.d.id + '', 'color:white; background-color:green; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
-                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toString() + "]</b> Successfully entered a colour switch event with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux. Chosen colour: " + z.colour + "</label><br>" + document.getElementById("rains").innerHTML
+                            document.getElementById("rains").innerHTML = "<label style=\"color:#15eb0a\"><b>[" + date.toTimeString().split(" ")[0]  + " / " +  USER_TOKEN[i].id +  "]</b> Successfully entered a colour switch event with <b>" + json.d.embeds[0].description.split("**")[1].split(" R$")[0] + "</b> robux. Chosen colour: " + z.colour + "</label><br>" + document.getElementById("rains").innerHTML
                         } else if (response.status == 429) {
                             console.log('%cERROR%c Rate limited. Able to react again after ' + JSON.parse(text).retry_after + ' seconds.', 'color:white; background-color:red; border-radius:5px; padding-left:3px; padding-right:4px;', 'color:white');
                         } else {
-                            document.getElementById("rains").innerHTML = "<label style=\"color:#eb0a0a\"><b>[" + date.toString() + "]</b> Unable to enter rain (something went wrong.).</label><br>" + document.getElementById("rains").innerHTML
+                            document.getElementById("rains").innerHTML = "<label style=\"color:#eb0a0a\"><b>[" + date.toTimeString().split(" ")[0]  + " / " + USER_TOKEN[i].id +  "]</b> Unable to enter rain (something went wrong.).</label><br>" + document.getElementById("rains").innerHTML
                         }
                     })
 
                 })
+
+            }
                     }
                     }
                     }
@@ -269,8 +297,10 @@ async function messageHandler(message) {
 
 
 function doLogin() {
-    let msg = {
-        "token": USER_TOKEN,
+
+    for (let i = 0; i < USER_TOKEN.length; i++) {
+        let msg = {
+        "token": USER_TOKEN[i].token,
         "properties": {
             "$os": "browser",
             "$browser": "chrome",
@@ -282,11 +312,22 @@ function doLogin() {
         "op": 2,
         "d": msg
     }
+
+      if(i == 0)
+      {
     ws.send(JSON.stringify(payload))
+      }
+    }
+        
+    
+    
+
+
+   
 }
 
 let date = new Date()
-document.getElementById("rains").innerHTML = "<b>[" + date.toString() + "]</b> Started listening.<br>" + document.getElementById("rains").innerHTML
+document.getElementById("rains").innerHTML = "<b>[" + date.toTimeString().split(" ")[0] + "]</b> Started listening.<br>" + document.getElementById("rains").innerHTML
 
 connect()
 
