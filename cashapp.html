@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+
+@font-face {
+    font-family: "cashapp";
+    src: url("aa.ttf");
+}
+
+
+*{
+    font-family: "cashapp";
+    letter-spacing: 0.06em
+}
+
+
+        body{
+            background-color: #0c0c0e;
+            color: white;
+            padding-left: 15px;
+            padding-right: 15px;
+
+        }
+
+        .pfp{
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-right: 15px;
+            margin-top: 15px;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+        }
+        
+        .header{
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-left: 20px;
+            margin-top: 15px;
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+
+        .moneyDiv{
+            width: 100%;
+            background-color: #17181a;
+            margin-top:75px;
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            
+        }
+
+        .a{
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .balance{
+            font-weight: bold;
+            font-size: 30px;
+            display: block;
+            margin-bottom: 34px;
+            
+        }
+
+        .btn{
+            width: 100%;
+            border: none;
+            background-color: #00bd45;
+            color: white;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: bold;
+            padding-top: 11px;
+            padding-bottom: 11px;
+        }
+
+        .buttons{
+            position: absolute;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+    <body>
+        <img src="https://cdn.discordapp.com/attachments/1034217097565315183/1076242102473719908/image.png" class="pfp">
+        <label class="header">Money</label>
+        <div class="moneyDiv">
+            <label class="a"><b>Available</b></label>
+            <label class="balance">£1,000.00</label>
+
+            <button class="btn">Cash Out</button>
+
+            <img class="buttons" src="https://i.imgur.com/HjH8MJI.png">
+        </div>
+    </body> 
+</html>
